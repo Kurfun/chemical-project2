@@ -5,19 +5,22 @@ export interface MenuItem {
   line1: string
   line2: string
   icon: string
+  hideOnHome?: boolean;
 }
 
 export const MENU_ITEMS: MenuItem[] = [
-  { id: 'organic',    line1: 'molecular', line2: 'model', icon: '⬡'  },
-  { id: 'inorganic',  line1: 'Inorganic', line2: '3D structure', icon: '⚛'  },
-  { id: 'analytical', line1: 'Mendeleev,s', line2: 'Dream', icon: '💤'  },
-  { id: 'pharma',     line1: 'Medicine', line2: 'Cards', icon: '💊' },
+  { id: 'organic',    line1: '普通化學', line2: '分子對稱性', icon: '⚗'  },
+  { id: 'inorganic',  line1: '無機化學', line2: '分子幾何與VSEPR', icon: '⬢'  },
+  { id: 'analytical', line1: '元素', line2: '週期表', icon: '⚛'  },
+  { id: 'pharma',     line1: '藥理學', line2: '單字卡', icon: '💊' },
+  { id: 'tracker',    line1: '文獻追蹤',line2: '進度版', icon: '✏️', hideOnHome: true } 
 ]
 
 export const PAGE_TITLES: Record<string, string> = {
-  organic:    'Molecular',
-  inorganic:  '3D structure',
-  analytical: 'Mendeleev_Zzz',
-  pharma:     'Medicine',
-  results:    'Analyze',
+  organic:    '分子對稱性',
+  inorganic:  '分子幾何與VSEPR',
+  analytical: '週期表',
+  pharma:     '單字卡',
+  results:    '成果分析',
+  tracker: '有機配對' 
 }

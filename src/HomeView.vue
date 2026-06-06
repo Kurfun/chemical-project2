@@ -11,10 +11,10 @@
       <p class="app-subtitle">Chemistry Review</p>
     </header>
 
-    <!-- ── 四格卡片 ── -->
+    <!-- ── 限制在 4+1 個卡片（過濾掉隱藏項目） ── -->
     <main class="grid-container">
       <button
-        v-for="item in MENU_ITEMS"
+        v-for="item in visibleMenuItems"
         :key="item.id"
         class="menu-card"
         @click="$emit('navigate', item.id)"
@@ -32,7 +32,7 @@
     <button class="results-btn" @click="$emit('navigate', 'results')">
       <div class="results-left">
         <span class="results-icon">📊</span>
-        <span class="results-label">Analyze</span>
+        <span class="results-label">成果分析</span>
       </div>
       <span class="results-arrow">→</span>
     </button>
@@ -46,14 +46,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { MENU_ITEMS } from './types'
 
 export default defineComponent({
   name: 'HomeView',
   emits: ['navigate'],
   setup() {
-    return { MENU_ITEMS }
+    // 💡 建立計算屬性：過濾掉含有 hideOnHome: true 的項目，首頁只會顯示沒被隱藏的卡片
+    const visibleMenuItems = computed(() => {
+      return MENU_ITEMS.filter(item => !item.hideOnHome)
+    })
+
+    return { visibleMenuItems }
   }
 })
 </script>
