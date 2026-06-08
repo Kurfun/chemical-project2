@@ -22,5 +22,5 @@ export const PAGE_TITLES: Record<string, string> = {
   analytical: '週期表',
   pharma:     '單字卡',
   results:    '成果分析',
-  tracker: '有機配對' 
+  tracker: '文獻追蹤' 
 }

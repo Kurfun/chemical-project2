@@ -191,8 +191,8 @@ export default defineComponent({
     // 中文對照，提供側拉選單顯示中文大標題
     const getCategoryZHName = (id: string) => {
       const names: Record<string, string> = {
-        organic: '分子對',
-        inorganic: '檢群檢視',
+        organic: '分子對稱性實作',
+        inorganic: '點群檢視',
         analytical: '週期表',
         pharma: '單字卡',
         tracker: '文獻追蹤' 

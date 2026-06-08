@@ -20,8 +20,8 @@ const workspaceRef = ref<InstanceType<typeof Workspace2D> | null>(null);
 const modalRef = ref<InstanceType<typeof VseprModal> | null>(null);
 
 // 遊戲內部狀態
-let structureLocked = ref<boolean>(false);
-let lonePairs = ref<LonePair[]>([]);
+const structureLocked = ref<boolean>(false);
+const lonePairs = ref<LonePair[]>([]);
 let lpIdCounter = 0;
 
 // 特效反應響應包
@@ -270,11 +270,8 @@ function checkAnswer() {
 
   for (const [symbol, count] of Object.entries(mol.atoms)) {
     if ((placedCounts[symbol] || 0) !== count) {
-      const idealAngle = mol.hints.find(h => h[0].includes('理論夾角') || h[0].includes('理論鍵角'))?.[1] || '—';
-      lockStructure(true);
-      showFeedback(`❌ 答題錯誤！原子數量不符，需要 ${count} 個 ${symbol}，目前只有 ${placedCounts[symbol] || 0} 個。<br>✅ 正確答案已顯示：${mol.shape}，理論鍵角 ${idealAngle}`, 'error');
+      showFeedback(`❌ 答題錯誤！原子數量不符，需要 ${count} 個 ${symbol}，目前只有 ${placedCounts[symbol] || 0} 個。`, 'error');
       triggerRepulsionWave(205, 105);
-      showTheoreticalAngle();
       return;
     }
   }
@@ -282,9 +279,7 @@ function checkAnswer() {
   // 2. 驗證中心原子存在
   const central = atomsInPlay.value.find(a => a.symbol === mol.centralAtom);
   if (!central) {
-    lockStructure(true);
-    showFeedback(`❌ 答題錯誤！找不到中心原子！<br>✅ 正確答案已顯示於建構區`, 'error');
-    showTheoreticalAngle();
+    showFeedback(`❌ 答題錯誤！找不到中心原子！`, 'error');
     return;
   }
 
@@ -293,11 +288,8 @@ function checkAnswer() {
   const connectionsToCentral = bondsInPlay.value.filter(b => b.includes(central.id));
 
   if (connectionsToCentral.length !== outers.length) {
-    const idealAngle = mol.hints.find(h => h[0].includes('理論夾角') || h[0].includes('理論鍵角'))?.[1] || '—';
-    lockStructure(true);
-    showFeedback(`❌ 答題錯誤！連結不完整，所有配位原子都應連接到中央的 ${mol.centralAtom} 原子。<br>✅ 正確答案已顯示：${mol.shape}，理論鍵角 ${idealAngle}`, 'error');
+    showFeedback(`❌ 答題錯誤！連結不完整，所有配位原子都應連接到中央的 ${mol.centralAtom} 原子。`, 'error');
     triggerRepulsionWave(central.x, central.y);
-    showTheoreticalAngle();
     return;
   }
 
@@ -312,26 +304,20 @@ function checkAnswer() {
 
           // 水彎曲判定 (不可成直線，夾角差太大)
           if (rule.type === 'bent' && angleDiff > rule.tolerance) {
-            lockStructure(true);
             showFeedback(rule.errorMessage, 'error');
             triggerRepulsionWave(central.x, central.y - 30);
-            showTheoreticalAngle();
             return;
           }
           // 直線型判定 (必須呈對稱直線，偏離不可太大)
           if (rule.type === 'linear' && angleDiff > rule.tolerance) {
-            lockStructure(true);
             showFeedback(rule.errorMessage, 'error');
             triggerRepulsionWave(central.x, central.y);
-            showTheoreticalAngle();
             return;
           }
           // 一般鍵角容差判定
           if (rule.type === 'angle' && angleDiff > rule.tolerance) {
-            lockStructure(true);
             showFeedback(rule.errorMessage, 'error');
             triggerRepulsionWave(central.x, central.y);
-            showTheoreticalAngle();
             return;
           }
         }
@@ -407,13 +393,13 @@ onMounted(() => {
       <!-- 分子選單 -->
       <div class="mol-select">
         <button
-          v-for="(_, key) in MOLECULES"
+          v-for="(mol, key) in MOLECULES"
           :key="key"
           class="mol-btn"
           :class="{ active: key === currentMolKey }"
           @click="loadMol(key)"
         >
-          {{ key === 'H2O' ? 'H₂O' : key === 'NH3' ? 'NH₃' : key === 'BF3' ? 'BF₃' : key === 'CO2' ? 'CO₂' : 'CH₄' }}
+          {{ mol.title.split('—')[0].trim() }}
         </button>
       </div>
 

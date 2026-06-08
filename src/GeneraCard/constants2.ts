@@ -10,9 +10,12 @@ export const CPK: Record<string, CPKElement> = {
   S:  { fill: '#FFFF30', stroke: '#DDBB00', text: '#444444', valence: 6 },
   Cl: { fill: '#1FEF1F', stroke: '#109910', text: '#FFFFFF', valence: 7 },
   Be: { fill: '#C2C2D6', stroke: '#999999', text: '#444444', valence: 2 },
+  Al: { fill: '#BFC2C7', stroke: '#8C9196', text: '#444444', valence: 3 },
   Sn: { fill: '#429EB0', stroke: '#2D7180', text: '#FFFFFF', valence: 4 },
   P:  { fill: '#FF8000', stroke: '#CC6600', text: '#FFFFFF', valence: 5 },
   As: { fill: '#D170D1', stroke: '#9E499E', text: '#FFFFFF', valence: 5 },
+  Mo: { fill: '#54B5B5', stroke: '#2E8080', text: '#FFFFFF', valence: 6 },
+  Co: { fill: '#F090A0', stroke: '#C05070', text: '#FFFFFF', valence: 3 },
   Xe: { fill: '#429EB0', stroke: '#26616D', text: '#FFFFFF', valence: 8 },
   Br: { fill: '#A72C15', stroke: '#731D0E', text: '#FFFFFF', valence: 7 },
   I:  { fill: '#9400D3', stroke: '#600095', text: '#FFFFFF', valence: 7 },
@@ -21,7 +24,7 @@ export const CPK: Record<string, CPKElement> = {
 
 export const MOLECULES: Record<string, MoleculeConfig> = {
   H2O: {
-    title: '水分子 H₂O — O 居中，形成 V 形彎曲結構',
+    title: 'H₂O — O 居中，形成 V 形彎曲結構',
     label: '建構區 — O 居中，兩個 H 各連一鍵',
     atoms: { O: 1, H: 2 }, centralAtom: 'O',
     shape: 'Bent', shapeKey: 'bent_4',
@@ -35,7 +38,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     funFact: '水分子的鍵角是 104.5°，比正四面體的 109.5° 還小——這是因為兩對孤對電子比鍵結電子更「霸道」，把 H 往內推。正是這個小小的 4.5° 差異，讓水有了表面張力、毛細現象，和所有孕育生命的奇蹟。',
     eggEmoji: '💧',
     eggTitle: '生命之水的秘密角度',
-    xp: 120, levelLabel: '關卡 3 / 8', prog: 30, progLabel: '3 / 8 完成',
+    xp: 120, levelLabel: '關卡 1 / 5', prog: 20, progLabel: '1 / 5 完成',
     validationRules: [
       {
         type: 'bent',
@@ -47,7 +50,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     ]
   },
   NH3: {
-    title: '氨分子 NH₃ — N 居中，向外斜下呈三角錐',
+    title: 'NH₃ — N 居中，向外斜下呈三角錐',
     label: '建構區 — N 居中，三個 H 各連一鍵',
     atoms: { N: 1, H: 3 }, centralAtom: 'N',
     shape: 'Trigonal pyramidal', shapeKey: 'trigonal_pyramid',
@@ -60,7 +63,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     funFact: '氨的鍵角 107° 比四面體少了 2.5°，就是那一對孤對電子在頂端「霸佔」空間。有趣的是：正是 N 的這種形狀讓氨極易溶於水，成為地球上最重要的氮源，每年施放數億噸在農田裡。',
     eggEmoji: '🌱',
     eggTitle: 'NH₃ 養活了一半人類',
-    xp: 140, levelLabel: '關卡 4 / 8', prog: 40, progLabel: '4 / 8 完成',
+    xp: 140, levelLabel: '關卡 2 / 5', prog: 40, progLabel: '2 / 5 完成',
     validationRules: [
       {
         type: 'angle',
@@ -72,7 +75,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     ]
   },
   BF3: {
-    title: '三氟化硼 BF₃ — B 居中，平面三角對稱',
+    title: 'BF₃ — B 居中，平面三角對稱',
     label: '建構區 — B 居中，三個 F 各連一鍵',
     atoms: { B: 1, F: 3 }, centralAtom: 'B',
     shape: 'Trigonal planar', shapeKey: 'trigonal_planar',
@@ -85,7 +88,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     funFact: 'BF₃ 是完美的平面三角形，因為硼只有 3 個價電子，沒有孤對電子——但這讓它成為超級「缺電子」的路易士酸。遇到任何有孤對電子的分子就立刻抓住，就像一個永遠張著嘴的小怪獸。',
     eggEmoji: '🔺',
     eggTitle: 'BF₃ 是貪婪的路易士酸',
-    xp: 130, levelLabel: '關卡 5 / 8', prog: 50, progLabel: '5 / 8 完成',
+    xp: 130, levelLabel: '關卡 3 / 5', prog: 60, progLabel: '3 / 5 完成',
     validationRules: [
       {
         type: 'angle',
@@ -97,7 +100,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     ]
   },
   CO2: {
-    title: '二氧化碳 CO₂ — C 居中，呈直線型對稱',
+    title: 'CO₂ — C 居中，呈直線型對稱',
     label: '建構區 — C 居中，兩個 O 排成一直線',
     atoms: { C: 1, O: 2 }, centralAtom: 'C',
     shape: 'Linear', shapeKey: 'linear',
@@ -110,7 +113,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     funFact: 'CO₂ 是完美的直線型，兩個雙鍵讓碳沒有孤對電子，分子雖然有極性鍵，卻因為完全對稱而抵消成非極性。這就是為什麼它能在大氣中自由飄移——但也正是同樣的非極性讓它吸收紅外線，造成溫室效應。',
     eggEmoji: '🌍',
     eggTitle: 'CO₂ — 完美對稱的氣候殺手',
-    xp: 110, levelLabel: '關卡 2 / 8', prog: 20, progLabel: '2 / 8 完成',
+    xp: 110, levelLabel: '關卡 4 / 5', prog: 80, progLabel: '4 / 5 完成',
     validationRules: [
       {
         type: 'linear',
@@ -122,7 +125,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     ]
   },
   CH4: {
-    title: '甲烷 CH₄ — C 居中，呈正四面體空間',
+    title: 'CH₄ — C 居中，呈正四面體空間',
     label: '建構區 — C 居中，四個 H 各連一鍵',
     atoms: { C: 1, H: 4 }, centralAtom: 'C',
     shape: 'Tetrahedral', shapeKey: 'tetrahedral',
@@ -135,7 +138,7 @@ export const MOLECULES: Record<string, MoleculeConfig> = {
     funFact: '甲烷的 109.5° 四面體角是大自然最喜歡的角度，因為它讓四個鍵盡可能遠離。令人意外的是：一頭牛每天打嗝釋放的甲烷，溫室效應是 CO₂ 的 25 倍——正四面體的美麗結構卻是地球暖化的幫兇之一。',
     eggEmoji: '🐄',
     eggTitle: 'CH₄ 與牛的溫室效應',
-    xp: 150, levelLabel: '關卡 6 / 8', prog: 60, progLabel: '6 / 8 完成',
+    xp: 150, levelLabel: '關卡 5 / 5', prog: 100, progLabel: '5 / 5 完成',
     validationRules: [
       {
         type: 'angle',
@@ -175,7 +178,7 @@ export const EXAMPLES_3D_DATA: Record<string, Molecule3D> = {
     planeNormals: [[0, 0, 1], [1, 0, 0], [-0.5, 0.866, 0], [-0.5, -0.866, 0]]
   },
   'AlCl₃': {
-    atoms: [{ t: 'Be', x: 0, y: 0, z: 0 }, { t: 'Cl', x: 0, y: 1.05, z: 0 }, { t: 'Cl', x: 0.9, y: -0.52, z: 0 }, { t: 'Cl', x: -0.9, y: -0.52, z: 0 }],
+    atoms: [{ t: 'Al', x: 0, y: 0, z: 0 }, { t: 'Cl', x: 0, y: 1.05, z: 0 }, { t: 'Cl', x: 0.9, y: -0.52, z: 0 }, { t: 'Cl', x: -0.9, y: -0.52, z: 0 }],
     bonds: [[0, 1], [0, 2], [0, 3]],
     planeNormals: [[0, 0, 1], [1, 0, 0], [-0.5, 0.866, 0], [-0.5, -0.866, 0]]
   },
@@ -290,12 +293,12 @@ export const EXAMPLES_3D_DATA: Record<string, Molecule3D> = {
     planeNormals: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
   },
   'Mo(CO)₆': {
-    atoms: [{ t: 'Xe', x: 0, y: 0, z: 0 }, { t: 'C', x: 0.65, y: 0, z: 0 }, { t: 'C', x: -0.65, y: 0, z: 0 }, { t: 'C', x: 0, y: 0.65, z: 0 }, { t: 'C', x: 0, y: -0.65, z: 0 }, { t: 'C', x: 0, y: 0, z: 0.65 }, { t: 'C', x: 0, y: 0, z: -0.65 }],
+    atoms: [{ t: 'Mo', x: 0, y: 0, z: 0 }, { t: 'C', x: 0.65, y: 0, z: 0 }, { t: 'C', x: -0.65, y: 0, z: 0 }, { t: 'C', x: 0, y: 0.65, z: 0 }, { t: 'C', x: 0, y: -0.65, z: 0 }, { t: 'C', x: 0, y: 0, z: 0.65 }, { t: 'C', x: 0, y: 0, z: -0.65 }],
     bonds: [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6]],
     planeNormals: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
   },
   '[Co(NH₃)₆]³⁺': {
-    atoms: [{ t: 'Pt', x: 0, y: 0, z: 0 }, { t: 'N', x: 0.7, y: 0, z: 0 }, { t: 'N', x: -0.7, y: 0, z: 0 }, { t: 'N', x: 0, y: 0.7, z: 0 }, { t: 'N', x: 0, y: -0.7, z: 0 }, { t: 'N', x: 0, y: 0, z: 0.7 }, { t: 'N', x: 0, y: 0, z: -0.7 }],
+    atoms: [{ t: 'Co', x: 0, y: 0, z: 0 }, { t: 'N', x: 0.7, y: 0, z: 0 }, { t: 'N', x: -0.7, y: 0, z: 0 }, { t: 'N', x: 0, y: 0.7, z: 0 }, { t: 'N', x: 0, y: -0.7, z: 0 }, { t: 'N', x: 0, y: 0, z: 0.7 }, { t: 'N', x: 0, y: 0, z: -0.7 }],
     bonds: [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6]],
     planeNormals: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
   },

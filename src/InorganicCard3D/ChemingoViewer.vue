@@ -32,7 +32,8 @@ const activeMolecule = computed(() =>
 const hasInversionCenter = computed(() => {
   const el = activeMolecule.value?.elements;
   if (!el) return false;
-  return el.includes(', i') || el.includes(' i,') || el.endsWith(' i');
+  // 用詞邊界正則確保匹配獨立的 "i"，避免誤判 "i" 出現在其他字符中
+  return /(?:^|[\s,])i(?:$|[\s,])/.test(el);
 });
 
 // 選定點群後可用的分子清單

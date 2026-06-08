@@ -55,7 +55,7 @@
                 <input
                   type="text"
                   v-model="customCard.en"
-                  placeholder="例如: Aspirin"
+                  placeholder="Ex:Penicillin G"
                   class="custom-textbox"
                   @blur="fetchPubChemData"
                 />
@@ -65,7 +65,7 @@
                 <input
                   type="text"
                   v-model="customCard.category"
-                  placeholder="例如: NSAID"
+                  placeholder="Ex:category"
                   class="custom-textbox"
                 />
               </div>
@@ -96,7 +96,7 @@
               <input
                 type="text"
                 v-model="customCard.zh"
-                placeholder="輸入中文藥名 (例如: 阿斯匹靈)"
+                placeholder="例:盤尼西林"
                 class="custom-textbox-zh"
               />
               <div class="face-tag text-teal-100">中</div>
@@ -151,7 +151,7 @@
                     <input
                       type="text"
                       v-model="customCard.symptom"
-                      placeholder="對應症狀 (例如: 發燒、止痛)"
+                      placeholder="例:細菌感染"
                       class="custom-row-input"
                     />
                   </div>
@@ -163,7 +163,7 @@
                     <input
                       type="text"
                       v-model="customCard.effect"
-                      placeholder="藥物功效 (例如: 退燒、抗發炎)"
+                      placeholder="例:抑制細菌細胞壁合成，使其膨脹破裂。"
                       class="custom-row-input text-teal-300"
                     />
                   </div>
@@ -207,7 +207,7 @@
           'clear-btn-style': isCustomPage && isCustomCardSaved
         }"
         @click="handleNextClick"
-        :disabled="currentIndex === cards.length - 1 && (!isCustomPage || !isCustomCardSaved)"
+        :disabled="currentIndex === cards.length - 1 && !isAtLastPredefined && (!isCustomPage || !isCustomCardSaved)"
         :title="isAtLastPredefined ? '新增自訂卡片 (⊕)' : (isCustomPage && isCustomCardSaved ? '清除自訂內容 (🗑️)' : '下一張 (→鍵)')"
       >
         <template v-if="isAtLastPredefined">
@@ -402,10 +402,12 @@ export default defineComponent({
 }
 
 /* ── 3D 字卡容器 ── */
+/* ── 3D 字卡容器 ── */
 .card-scene {
   width: min(320px, 80vw);
   height: min(440px, 110vw);
   perspective: 1200px;
+  -webkit-perspective: 1200px;           /* ← 新增 */
   cursor: pointer;
 }
 
@@ -414,6 +416,7 @@ export default defineComponent({
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;  /* ← 新增 */
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .card-inner.flipped {
@@ -429,8 +432,16 @@ export default defineComponent({
   justify-content: space-between;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transform: translateZ(0);              /* ← 新增：強制 GPU 分層（正面） */
+  -webkit-transform: translateZ(0);      /* ← 新增 */
   padding: 24px 20px;
   box-shadow: 0 10px 25px -5px rgba(26, 58, 110, 0.15), 0 8px 10px -6px rgba(26, 58, 110, 0.15);
+}
+
+/* ← 新增這整段：背面預設旋轉 180 度 */
+.card-back {
+  transform: translateZ(0) rotateY(180deg);
+  -webkit-transform: translateZ(0) rotateY(180deg);
 }
 
 /* 頂部標頭格式 */
