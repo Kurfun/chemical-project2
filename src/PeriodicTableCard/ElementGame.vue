@@ -182,7 +182,7 @@ const handleClose = () => {
       <button class="game-close" @click="handleClose">✕</button>
 
       <div class="game-header">
-        <h2 class="game-title">🧠 元素記憶配對</h2>
+        <h2 class="game-title">🎲 元素記憶配對</h2>
         <p class="game-desc">翻開卡牌，將「中文元素名」與其「英文名稱」成功配對！</p>
       </div>
 

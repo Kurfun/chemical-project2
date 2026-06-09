@@ -140,7 +140,7 @@ onMounted(() => {
 
         <!-- 配對遊戲按鈕 -->
         <button class="game-trigger-btn" @click="isGameOpen = true">
-          <span>🧠 元素配對挑戰</span>
+          <span>🎲 元素配對挑戰</span>
         </button>
       </div>
     </div>

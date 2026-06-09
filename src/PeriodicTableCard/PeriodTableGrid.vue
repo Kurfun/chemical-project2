@@ -197,7 +197,7 @@ const isHighlighted = (z: number, filteredZSet: Set<number> | null) => {
 
 .cell-wrapper {
   width: 46px;
-  height: 52px;
+  height: 56px;
   flex-shrink: 0;
 }
 
@@ -251,6 +251,7 @@ const isHighlighted = (z: number, filteredZSet: Set<number> | null) => {
   font-size: 0.55rem;
   font-family: 'Fira Code', monospace;
   opacity: 0.75;
+  line-height: 1; 
 }
 
 .el-symbol {
@@ -258,6 +259,7 @@ const isHighlighted = (z: number, filteredZSet: Set<number> | null) => {
   font-weight: 700;
   font-family: 'Fira Code', monospace;
   line-height: 1;
+  margin-top: 8px; 
 }
 
 .el-name-zh {

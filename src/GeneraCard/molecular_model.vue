@@ -409,103 +409,108 @@ onMounted(() => {
           <div class="challenge-title">{{ activeMolecule.title }}</div>
         </div>
 
-        <!-- 2D 拖曳 Canvas 區 -->
-        <Workspace2D
-          ref="workspaceRef"
-          v-model:atoms="atomsInPlay"
-          v-model:bonds="bondsInPlay"
-          v-model:lonePairs="lonePairs"
-          :activeMolecule="activeMolecule"
-          :structureLocked="structureLocked"
-          :stabilityGlow="stabilityGlow"
-          :repulsionCloud="repulsionCloud"
-          @update-angle="handleAngleUpdate"
-          @trigger-repulsion="triggerRepulsionWave"
-          @show-feedback="showFeedback"
-        />
+        <!-- ── 桌機雙欄 / 手機單欄 容器 ── -->
+        <div class="desktop-layout">
 
-        <div v-if="structureLocked" class="lock-hint">
-          ✓ 結構對稱已解鎖 — 可按住拖曳旋轉分子觀察對稱幾何
-        </div>
+          <!-- ── 左欄：Canvas 建構區 + 原子庫 ── -->
+          <div class="left-col">
+            <Workspace2D
+              ref="workspaceRef"
+              v-model:atoms="atomsInPlay"
+              v-model:bonds="bondsInPlay"
+              v-model:lonePairs="lonePairs"
+              :activeMolecule="activeMolecule"
+              :structureLocked="structureLocked"
+              :stabilityGlow="stabilityGlow"
+              :repulsionCloud="repulsionCloud"
+              @update-angle="handleAngleUpdate"
+              @trigger-repulsion="triggerRepulsionWave"
+              @show-feedback="showFeedback"
+            />
 
-        <!-- 原子庫 -->
-        <div v-if="!structureLocked" class="atom-tray">
-          <div class="atom-tray-label">配位原子庫 (點擊加入)</div>
-          <div class="atom-tray-row">
-            <template v-for="(count, symbol) in activeMolecule.atoms" :key="symbol">
-              <div
-                v-if="symbol !== activeMolecule.centralAtom || count > 1"
-                class="atom-chip"
-                @click="spawnAtom(symbol)"
-              >
-                <span
-                  class="atom-dot"
-                  :style="{ background: CPK[symbol].fill, borderColor: CPK[symbol].stroke }"
-                ></span>
-                <span>加入 {{ symbol }} × {{ symbol === activeMolecule.centralAtom ? count - 1 : count }}</span>
+            <div v-if="structureLocked" class="lock-hint">
+              ✓ 結構對稱已解鎖 — 可按住拖曳旋轉分子觀察對稱幾何
+            </div>
+
+            <!-- 原子庫（桌機置於 canvas 下方） -->
+            <div v-if="!structureLocked" class="atom-tray">
+              <div class="atom-tray-label">配位原子庫 (點擊加入)</div>
+              <div class="atom-tray-row">
+                <template v-for="(count, symbol) in activeMolecule.atoms" :key="symbol">
+                  <div
+                    v-if="symbol !== activeMolecule.centralAtom || count > 1"
+                    class="atom-chip"
+                    @click="spawnAtom(symbol)"
+                  >
+                    <span
+                      class="atom-dot"
+                      :style="{ background: CPK[symbol].fill, borderColor: CPK[symbol].stroke }"
+                    ></span>
+                    <span>加入 {{ symbol }} × {{ symbol === activeMolecule.centralAtom ? count - 1 : count }}</span>
+                  </div>
+                </template>
+                <div class="reset-chip" @click="loadMol(currentMolKey)">
+                  <span>🔄 重置</span>
+                </div>
               </div>
-            </template>
-            <!-- 重置 -->
-            <div class="reset-chip" @click="loadMol(currentMolKey)">
-              <span>🔄 重置</span>
+            </div>
+
+            <!-- 操作說明小卡 -->
+            <div v-if="!structureLocked" class="legend-panel">
+              <span><span class="legend-dot yellow"></span>未鍵結電子</span>
+              <span><span class="legend-dot blue"></span>鍵結電子</span>
+              <span>連結兩原子的電子點形成穩定共價鍵</span>
+            </div>
+
+            <!-- 彩蛋知識卡（桌機：置於左欄） -->            <div v-if="eggCardShow" class="egg-card show">
+              <div class="egg-header">
+                <span class="egg-emoji">{{ eggEmoji }}</span>
+                <span class="egg-title">{{ eggTitle }}</span>
+                <span class="egg-badge">化學彩蛋</span>
+              </div>
+              <div class="egg-text">{{ eggText }}</div>
             </div>
           </div>
-        </div>
 
-        <!-- 操作說明小卡 -->
-        <div v-if="!structureLocked" class="legend-panel">
-          <span>
-            <span class="legend-dot yellow"></span>未鍵結電子
-          </span>
-          <span>
-            <span class="legend-dot blue"></span>鍵結電子
-          </span>
-          <span>連結兩原子的電子點形成穩定共價鍵</span>
-        </div>
+          <!-- ── 右欄：VSEPR 提示 + 按鈕 ── -->
+          <div class="right-col">
 
-        <!-- 反饋警告 -->
-        <div
-          v-if="feedbackText"
-          class="feedback show"
-          :class="feedbackType"
-          v-html="feedbackText"
-        ></div>
+            <!-- VSEPR 智慧提示面板 -->
+            <HintPanel
+              :activeMolecule="activeMolecule"
+              @open-vsepr="openVsepr"
+            />
 
-        <!-- VSEPR 智慧提示面板 -->
-        <HintPanel
-          :activeMolecule="activeMolecule"
-          @open-vsepr="openVsepr"
-        />
+            <!-- 鍵角顯示（桌機：移至右欄） -->
+            <div v-if="isAngleDisplayVisible" class="angle-display">
+              <span>{{ angleLabel }}</span>
+              <div class="angle-value" :style="{ color: angleTextColor }">{{ angleValueStr }}</div>
+              <div class="angle-bar-wrap">
+                <div class="angle-bar" :style="{ width: angleBarWidth, background: angleBarBg }"></div>
+              </div>
+            </div>
 
-        <!-- 鍵角顯示 -->
-        <div v-if="isAngleDisplayVisible" class="angle-display">
-          <span>{{ angleLabel }}</span>
-          <div class="angle-value" :style="{ color: angleTextColor }">{{ angleValueStr }}</div>
-          <div class="angle-bar-wrap">
-            <div class="angle-bar" :style="{ width: angleBarWidth, background: angleBarBg }"></div>
-          </div>
-        </div>
+            <!-- 提交按鈕 -->
+            <div class="btn-row">
+              <button
+                class="btn-submit"
+                :class="{ 'success-state': structureLocked }"
+                @click="structureLocked ? loadMol(currentMolKey) : checkAnswer()"
+              >
+                {{ structureLocked ? '重新挑戰 🔄' : '提交驗證對稱結構 →' }}
+              </button>
+            </div>
 
-        <!-- 彩蛋知識卡 -->
-        <div v-if="eggCardShow" class="egg-card show">
-          <div class="egg-header">
-            <span class="egg-emoji">{{ eggEmoji }}</span>
-            <span class="egg-title">{{ eggTitle }}</span>
-            <span class="egg-badge">化學彩蛋</span>
-          </div>
-          <div class="egg-text">{{ eggText }}</div>
-        </div>
+            <!-- 反饋警告（桌機：按鈕下方） -->
+            <div
+              v-if="feedbackText"
+              class="feedback show"
+              :class="feedbackType"
+              v-html="feedbackText"
+            ></div>
 
-        <!-- 提交按鈕 -->
-        <div class="btn-row">
-          <button
-            class="btn-submit"
-            :class="{ 'success-state': structureLocked }"
-            @click="structureLocked ? loadMol(currentMolKey) : checkAnswer()"
-          >
-            {{ structureLocked ? '重新挑戰 🔄' : '提交驗證對稱結構 →' }}
-          </button>
-        </div>
+          </div><!-- end right-col -->
+        </div><!-- end desktop-layout -->
       </div>
     </div>
   </div>
@@ -529,7 +534,6 @@ onMounted(() => {
   background: #ffffff;
   box-shadow: 4px 6px 0px #1a3a6e;
 }
-
 /* ── Topbar ── */
 .topbar {
   background: #1a3a6e;
@@ -761,12 +765,48 @@ onMounted(() => {
 .angle-bar-wrap { flex: 1; height: 5px; background: #ddd8cc; border-radius: 3px; }
 .angle-bar { height: 5px; border-radius: 3px; transition: width 0.25s, background-color 0.25s; }
 
-.lock-hint {
-  font-size: 10px;
-  color: #c8a84b;
-  text-align: center;
-  padding: 3px 0 6px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+/* ── Desktop two-column layout ── */
+.desktop-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.left-col  { display: flex; flex-direction: column; gap: 8px; }
+.right-col { display: flex; flex-direction: column; gap: 12px; }
+
+@media (min-width: 720px) {
+  /* 卡片在桌機撐開到雙欄所需寬度 */
+  .card {
+    max-width: 860px;
+  }
+
+  .body {
+    padding: 18px 20px;
+  }
+
+  /* 桌機：左右並排；左欄固定 Canvas 比例，右欄自動填滿 */
+  .desktop-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* 左欄：Canvas 固定寬度，維持 410:210 比例 */
+  .left-col {
+    flex: 0 0 420px;
+    min-width: 0;
+  }
+
+  /* 右欄：自動填滿剩餘空間，有最小寬度避免過窄 */
+  .right-col {
+    flex: 1 1 0;
+    min-width: 240px;
+  }
+
+  /* 桌機下提交按鈕固定在右欄底部 */
+  .right-col .btn-row {
+    margin-top: auto;
+  }
 }
 </style>
