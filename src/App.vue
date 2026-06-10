@@ -89,7 +89,7 @@
     <!-- 有機化學：配對遊戲 -->
     <SubPage
       v-else-if="currentPage === 'organic'"
-      title="分子對稱性"
+      title="分子幾何與VSEPR"
       @navigate="navigate"
     >
       <molecular_model />
@@ -98,7 +98,7 @@
     <!-- 無機化學：點群互動檢視器 -->
     <SubPage
       v-else-if="currentPage === 'inorganic'"
-      title="分子幾何與VSEPR"
+      title="分子對稱性"
       @navigate="navigate"
     >
       <ChemingoViewer />
@@ -191,8 +191,8 @@ export default defineComponent({
     // 中文對照，提供側拉選單顯示中文大標題
     const getCategoryZHName = (id: string) => {
       const names: Record<string, string> = {
-        organic: '分子對稱性實作',
-        inorganic: '點群檢視',
+        organic: '分子結構實作',
+        inorganic: '3D分子結構',
         analytical: '週期表',
         pharma: '單字卡',
         tracker: '文獻追蹤' 
