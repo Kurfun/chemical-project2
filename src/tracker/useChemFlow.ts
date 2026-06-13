@@ -16,14 +16,14 @@ const DEFAULT_STATE: ChemFlowState = {
   papers: [
     { 
       id: 'paper-1', 
-      projectId: 'p1', 
-      title: 'Making moisturizing lotion', 
-      journal: 'IEEE not included', 
-      impactFactor: 5, 
-      url: 'https://www.youtube.com/watch?v=ZuPAfZr2v1o', 
+      projectId: 'p2', 
+      title: 'Palladium-Catalyzed Asymmetric Suzuki-Miyaura Coupling of Heteroaryl Boronic Acids', 
+      journal: 'Angew. Chem. Int. Ed.', 
+      impactFactor: 16.6, 
+      url: ' ', 
       status: 'experimented', 
       rating: 5, 
-      notes: 'Experimental equipment cannot be mixed.', 
+      notes: 'BrettPhos 配體對於具有空間位阻的底物表現極佳。', 
       pdfData: null, 
       pdfName: null 
     },
@@ -42,14 +42,14 @@ const DEFAULT_STATE: ChemFlowState = {
     },
     { 
       id: 'paper-3', 
-      projectId: 'p2', 
-      title: 'Palladium-Catalyzed Asymmetric Suzuki-Miyaura Coupling of Heteroaryl Boronic Acids', 
-      journal: 'Angew. Chem. Int. Ed.', 
-      impactFactor: 16.6, 
+      projectId: 'p1', 
+      title: 'Making moisturizing lotion(測試資料)', 
+      journal: 'none', 
+      impactFactor: 5, 
       url: ' ', 
       status: 'experimented', 
       rating: 5, 
-      notes: 'BrettPhos 配體對於具有空間位阻的底物表現極佳。', 
+      notes: 'Experimental equipment cannot be mixed.', 
       pdfData: null, 
       pdfName: null 
     }
@@ -82,7 +82,7 @@ export function useChemFlow() {
   const preloadDefaultPdf = async () => {
     try {
       // 尋找 paper-1
-      const targetPaper = state.value.papers.find(p => p.id === 'paper-1');
+      const targetPaper = state.value.papers.find(p => p.id === 'paper-3');
       
       // 如果 paper-1 存在，且目前還沒有載入過 PDF 實體資料 (避免覆蓋使用者手動上傳的檔案)
       if (targetPaper && !targetPaper.pdfData) {

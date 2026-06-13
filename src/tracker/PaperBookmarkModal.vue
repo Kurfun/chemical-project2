@@ -41,7 +41,7 @@
         <!-- 連結 -->
         <div>
           <label class="field-label">URL / DOI 連結</label>
-          <input v-model="form.url" class="form-input" type="url" placeholder="https://ieeexplore.ieee.org/document/..." />
+          <input v-model="form.url" class="form-input" type="url" placeholder="https://pubs.acs.org/doi/..." />
         </div>
 
         <!-- 研究主題 (Topic) -->

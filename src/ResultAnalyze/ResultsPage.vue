@@ -105,10 +105,10 @@ import { VISITS_KEY, type Visits } from './useVisits'
 
 // ── 科目設定 ──────────────────────────────────────────────
 const SUBJECTS = [
-  { key: 'organic',    label: '有機化學', color: '#1a3a6e' },
+  { key: 'organic',    label: '普通化學', color: '#1a3a6e' },
   { key: 'inorganic',  label: '無機化學', color: '#c8a84b' },
-  { key: 'analytical', label: '分析化學', color: '#a39b82' },
-  { key: 'pharma',     label: '藥用化學', color: '#5c7a95' }
+  { key: 'analytical', label: '週期表', color: '#a39b82' },
+  { key: 'pharma',     label: '藥理學', color: '#5c7a95' }
 ] as const
 
 export default defineComponent({
